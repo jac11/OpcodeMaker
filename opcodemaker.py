@@ -45,9 +45,7 @@ class Shell_Dump:
                  create1= os.path.join(path,self.ShellCode)
                  os.mkdir(create)
                  os.mkdir(create1)
-                 time.sleep(2) 
-                 os.chdir(self.dir_1)
-                  
+                 os.chdir(self.dir_1)      
                  print(O+"\n[+] Create file .....| ",os.getcwd())       
                  
              except OSError:
@@ -66,15 +64,15 @@ class Shell_Dump:
                 if self.args.code: 
                     self.file_cname = os.path.basename(self.args.code)
                     self.path_code =  os.path.abspath(self.args.code)
+
                 if self.file_cname[-4::]==".asm":
                    pass
                 else:
                      time.sleep(2)
                      print(R+"\n[*] Error ......| File Extension Not Correct "+W)
                      exit()
-                time.sleep(2)
-                
-                self.fpath = shutil.copy(self.path_code , "./")
+                time.sleep(2)              
+                self.fpath = shutil.copy("/".join(self.path_code.split('/')[:-2])+'/'+self.file_cname, "./")
                 self.file1 = str( self.file_cname[:-4] +  ".obj")
                 self.file2 = str( self.file_cname[:-4] +  ".dump")
                 self.file3 = str( self.file_cname[:-4] +  "_shellcode")
@@ -93,7 +91,6 @@ class Shell_Dump:
       def IF_OPtion(self):
            try:     
                  if self.args.arch86 and "0" in sys.argv[4] :         
-                    self.fpath = shutil.copy(self.path_code,"./") 
                     code = subprocess.call(['nasm','-f','elf32',"{}".format(self.file_cname),'-o','{}'.format(self.file1)])
                     if code == 1 :
                            print()
@@ -163,7 +160,7 @@ class Shell_Dump:
                       print(B+self.test+W)
                       print(Y+"\n\t\t\t\t\t[@]++++++++++++++++++++++++++[@]\n"+W)
                       time.sleep(1)
-              print(P+"\n[*] Status Files save at .....| ",os.getcwd())
+              print(P+"\n[*] Status Files save at .....| file://"+os.getcwd())
               print(W)
           except KeyboardInterrupt:
               print(self.Banner)            
@@ -181,7 +178,7 @@ class Shell_Dump:
                parser = argparse.ArgumentParser(description=" ")
                parser.add_argument( '-c'  ,"--code"     ,metavar=''   , action=None  ,help ="  file has assembly code  ")
                parser.add_argument( '-x86',"--arch86"   ,metavar=''   , action=None  ,help ="  Process architecture 32bit")
-               parser.add_argument( '-x64',"--arch64"   ,metavar=''   , action=None  ,help ="  Process architecture 64bit ")
+               parser.add_argument( '-X64',"--arch64"   ,metavar=''   , action=None  ,help ="  Process architecture 64bit ")
                self.args = parser.parse_args()
                if len(sys.argv)!=1 and len(sys.argv) != 3:
                    pass
