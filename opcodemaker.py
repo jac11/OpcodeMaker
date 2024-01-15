@@ -8,7 +8,7 @@ import shutil
 import subprocess  
 import argparse
 import pathlib
-
+from subprocess import  PIPE
 W = '\033[0m'     
 R = '\033[31m'    
 G = '\033[0;32m'  
@@ -91,7 +91,7 @@ class Shell_Dump:
       def IF_OPtion(self):
            try:     
                  if self.args.arch86  :         
-                    code = subprocess.call(['nasm','-f','elf32',"{}".format(self.file_cname),'-o','{}'.format(self.file1)])
+                    code = subprocess.call(['nasm','-f','elf32',"{}".format(self.file_cname),'-o','{}'.format(self.file1)],stderr=PIPE)
                     if code == 1 :
                            print()
                            print(R+"\n[+] Error ......| Instruction Not Completed Not Supported in 86-bit Mode [!]"+W)  
@@ -101,7 +101,7 @@ class Shell_Dump:
                           time.sleep(2)
                           print("\n[*] Status .......| The Object File x86 is Generated  !! ")                  
                  elif self.args.arch64 :               
-                       code = subprocess.call(['nasm','-f','elf64',"{}".format(self.file_cname),'-o','{}'.format(self.file1)])                     
+                       code = subprocess.call(['nasm','-f','elf64',"{}".format(self.file_cname),'-o','{}'.format(self.file1)],stderr=PIPE)                     
                        if code == 1 :
                            print()
                            print(R+"\n[+] Error ......| Instruction Not Completed Not Supported in 64-bit Mode [!]"+W)
@@ -123,9 +123,9 @@ class Shell_Dump:
              time.sleep(2)        
              print("\n[*] Status .......| The Linker Process Started \n ")
              time.sleep(2)
-             subprocess.call(['ld','-n','-o','{}'.format(self.file4),'{}'.format(self.file1)])
+             subprocess.call(['ld','-n','-o','{}'.format(self.file4),'{}'.format(self.file1)],stderr=PIPE)
              with open(self.file2,'w')as file:                 
-                stdout =  subprocess.call(['objdump','-d','{}'.format(self.file1)], stdout=file, stderr=file)   
+                stdout =  subprocess.call(['objdump','-d','{}'.format(self.file1)], stdout=file,stderr=PIPE)   
           except KeyboardInterrupt:
               print(self.Banner)            
               exit()                    
