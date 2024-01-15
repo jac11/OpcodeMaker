@@ -46,12 +46,12 @@ class Shell_Dump:
                  os.mkdir(create)
                  os.mkdir(create1)
                  os.chdir(self.dir_1)      
-                 print(O+"\n[+] Create file .....| ",os.getcwd())       
+                 print(O+"[+] Create file .....| ",os.getcwd())       
                  
              except OSError:
                  time.sleep(2)
                  os.chdir(self.dir_1)
-                 print(O+"\n[+] file Exist .....| ",os.getcwd())
+                 print(O+"[+] file Exist   .......| ",os.getcwd())
                  time.sleep(2)
          except KeyboardInterrupt:
               print(self.Banner)
@@ -69,7 +69,7 @@ class Shell_Dump:
                    pass
                 else:
                      time.sleep(2)
-                     print(R+"\n[*] Error ......| File Extension Not Correct "+W)
+                     print(R+"[*] Error     ......| File Extension Not Correct "+W)
                      exit()
                 time.sleep(2)              
                 self.fpath = shutil.copy("/".join(self.path_code.split('/')[:-2])+'/'+self.file_cname, "./")
@@ -79,11 +79,11 @@ class Shell_Dump:
                 self.file4 = str( self.file_cname[:-4] +  ".Linker")
             except IOError  as E:
                  time.sleep(1)
-                 print(R+"\n[+] Error ......| ",E)
+                 print(R+"[+] Error     ......| ",E)
                  exit() 
             except Exception as E:
                  time.sleep(1)
-                 print(R+"\n[+] Error ......| ",E)
+                 print(R+"[+] Error     ......| ",E)
                  exit()                       
           except KeyboardInterrupt:
               print(self.Banner)
@@ -94,24 +94,24 @@ class Shell_Dump:
                     code = subprocess.call(['nasm','-f','elf32',"{}".format(self.file_cname),'-o','{}'.format(self.file1)],stderr=PIPE)
                     if code == 1 :
                            print()
-                           print(R+"\n[+] Error ......| Instruction Not Completed Not Supported in 86-bit Mode [!]"+W)  
+                           print(R+"[+] Error     ......| Instruction Not Completed Not Supported in 86-bit Mode [!]"+W)  
                            time.sleep(1)
                            exit()
                     else:
                           time.sleep(2)
-                          print("\n[*] Status .......| The Object File x86 is Generated  !! ")                  
+                          print("[*] Status       .......| The Object File x86 is Generated  !! ")                  
                  elif self.args.arch64 :               
                        code = subprocess.call(['nasm','-f','elf64',"{}".format(self.file_cname),'-o','{}'.format(self.file1)],stderr=PIPE)                     
                        if code == 1 :
                            print()
-                           print(R+"\n[+] Error ......| Instruction Not Completed Not Supported in 64-bit Mode [!]"+W)
+                           print(R+"[+] Error     ......| Instruction Not Completed Not Supported in 64-bit Mode [!]"+W)
                            time.sleep(2)
                            exit()
                        else:
-                          print("\n[*] Status .......| The Object File x64 is Generated !! ") 
+                          print("[*] Status       .......| The Object File x64 is Generated !! ") 
                           time.sleep(2)  
                  else :
-                       print(Y+"\n[+] Error ......| ArgumentParser "+W)
+                       print(Y+"[+] Error     /......| ArgumentParser "+W)
                        exit()    
                         
            except KeyboardInterrupt:
@@ -121,7 +121,7 @@ class Shell_Dump:
       def LINKER_ASSEMBLY(self):
           try:
              time.sleep(2)        
-             print("\n[*] Status .......| The Linker Process Started \n ")
+             print("[*] Linker       .......| The Linker Process Started  ")
              time.sleep(2)
              subprocess.call(['ld','-n','-o','{}'.format(self.file4),'{}'.format(self.file1)],stderr=PIPE)
              with open(self.file2,'w')as file:                 
@@ -155,12 +155,13 @@ class Shell_Dump:
                       self.test= test.read()
                       print()
                       print(Y+"\t\t\t\t\t\t{%}THE SHELLCODE{%}"+W)
-                      print(Y+"\t\t\t\t\t[@]++++++++++++++++++++++++++[@]\n"+W)
+                      print(Y+"\t\t\t\t\t[@]++++++++++++++++++++++++++[@]"+W)
                       time.sleep(1)
                       print(B+self.test+W)
-                      print(Y+"\n\t\t\t\t\t[@]++++++++++++++++++++++++++[@]\n"+W)
+                      print(Y+"\t\t\t\t\t[@]++++++++++++++++++++++++++[@]"+W)
                       time.sleep(1)
-              print(P+"\n[*] Status Files save at .....| file://"+os.getcwd())
+              print(P+"[*] Status Files save at    .....| file://"+os.getcwd())
+              print(P+"[*] Shellcode Files save at .....| file://"+str("/".join(os.getcwd().split('/')[:-1])+'/ShellCode'))
               print(W)
           except KeyboardInterrupt:
               print(self.Banner)            
