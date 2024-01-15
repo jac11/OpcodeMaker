@@ -90,7 +90,7 @@ class Shell_Dump:
               exit()   
       def IF_OPtion(self):
            try:     
-                 if self.args.arch86 and "0" in sys.argv[4] :         
+                 if self.args.arch86  :         
                     code = subprocess.call(['nasm','-f','elf32',"{}".format(self.file_cname),'-o','{}'.format(self.file1)])
                     if code == 1 :
                            print()
@@ -100,7 +100,7 @@ class Shell_Dump:
                     else:
                           time.sleep(2)
                           print("\n[*] Status .......| The Object File x86 is Generated  !! ")                  
-                 elif self.args.arch64 and "1" in sys.argv[4] :               
+                 elif self.args.arch64 :               
                        code = subprocess.call(['nasm','-f','elf64',"{}".format(self.file_cname),'-o','{}'.format(self.file1)])                     
                        if code == 1 :
                            print()
@@ -176,9 +176,9 @@ class Shell_Dump:
            try:
                parser = argparse.ArgumentParser( description="Usage: <OPtion> <arguments> ")
                parser = argparse.ArgumentParser(description=" ")
-               parser.add_argument( '-c'  ,"--code"     ,metavar=''   , action=None  ,help ="  file has assembly code  ")
-               parser.add_argument( '-x86',"--arch86"   ,metavar=''   , action=None  ,help ="  Process architecture 32bit")
-               parser.add_argument( '-X64',"--arch64"   ,metavar=''   , action=None  ,help ="  Process architecture 64bit ")
+               parser.add_argument( '-c'  ,"--code"     , action=None  ,help ="  file has assembly code  ")
+               parser.add_argument( '-x86',"--arch86"   , action='store_true'  ,help ="  Process architecture 32bit")
+               parser.add_argument( '-X64',"--arch64"   , action='store_true'  ,help ="  Process architecture 64bit ")
                self.args = parser.parse_args()
                if len(sys.argv)!=1 and len(sys.argv) != 3:
                    pass
