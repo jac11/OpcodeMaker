@@ -169,8 +169,9 @@ class Shell_Dump:
       def Copy_file(self):
            
             with open("../ShellCode/"+self.file_cname[:-4]+".c",'w') as Pro :
-                  Pro.write("#include <stdio.h>\n"+"#include <string.h>\n\n"+"const unsigned char code[] = \\"+'\r'+self.test+";\n\nint main ()\n{\t\n"\
-                  + '\tprintf("Shellcode Length:  %d\\n"'+", strlen(code));\n"+"\tint (*ret)() = (int(*)())code;\n"+"\tret();\n\n}") 
+                  Pro.write("#include <stdio.h>\n"+"#include <windows.h>\n\n"+"unsigned char shellcode[] ="+'\n\t\t'+self.test+";\n\nint main ()\n{\t\n"\
+                  +"\tvoid *exec = VirtualAlloc(0,sizeof shellcode,MEM_COMMIT,PAGE_EXECUTE_READWRITE);\n\t"+"memcpy(exec, shellcode, sizeof shellcode);\n"+"\t((void(*)())exec)();"+\
+                  "return 0;"+'\n}')
             print(self.Banner)
             exit()
       def parser(self):
